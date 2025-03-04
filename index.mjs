@@ -1,7 +1,11 @@
 // const express = require('express')
 import express from "express";
 import { faker } from "@faker-js/faker";
-const app = express();
+import cors from "cors";
+
+const app = express(); //instanciar la aplicación, el servidor web
+app.use(cors()); //le decimos al servidor web que use cors
+
 function createAccount() {
   const nombre = faker.person.fullName();
   const email = faker.internet.email();
@@ -9,6 +13,7 @@ function createAccount() {
   const edad = Number(faker.number.bigInt({ min: 18n, max: 99n }));
   return { nombre, email, direccion, edad };
 }
+
 function createAccounts(n) {
   const accounts = [];
   for (let i = 0; i < n; i++) {
@@ -16,7 +21,9 @@ function createAccounts(n) {
   }
   return accounts;
 } // creo 30 cuentas falsas
+
 const accounts = createAccounts(30);
+
 app.get("/", function (req, res) {
   res.send("Hola Mundo");
 });
